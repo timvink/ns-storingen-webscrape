@@ -1,13 +1,12 @@
 
-# Webscraping project for flight tickets
+# Webscraping project for train delays in the Netherlands
 
-As a practice exercise for the data science accelorator program, we will write a program to help us find a cheap ticket for a holiday.
+As a practice exercise for the data science accelorator program, we will write a program to scrape NS (dutch rail company) delays.
 
-Our goal is to visualize the ticket prices within a 1 month window, for various ticket prices.
+Our goal is to gain insight on which trajectories delays happen most often. 
 
 # Collaborators
 
-- Jonas Ahrendt
-- Niels Denissen
+- Chris Broeren
 - Tim Vink
 
