@@ -4,9 +4,9 @@ library(leaflet)
 #data = fread("data/data.csv")
 #data2 = getLatLon(data,stations)
 
-plotLines = function(data2,stations,date_start,date_end){
+plotLines <- function(data2,stations,date_start,date_end){
   # get unique locations
-  data2 = data2[date_start <= date & date_end >= date]
+  data2 <- data2[date_start <= date & date_end >= date]
   if(nrow(data2)==0){print("Empty data")}
   unique_locs = c(data2$origin, data2$destination) %>% unique
   sel_station <- stations[NAME %in% unique_locs]
