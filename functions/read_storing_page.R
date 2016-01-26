@@ -4,6 +4,7 @@
 # url <- "http://www.rijdendetreinen.nl/storingen/13071-22-januari-2016-defecte-trein-schiphol-airport-hilversum"
 read_storing_page <- function(url) { 
 
+  # Read the url html page
   txt <- read_html(url)
   raw <- txt %>% html_nodes("p") %>% html_text %>% paste(collapse = "\n\n") # One big flat text vector of every <p>
 
@@ -22,14 +23,21 @@ read_storing_page <- function(url) {
   )
   
   # Determine origin destination of each trajectory affected by storing.
-  trajectories <- txt %>% html_nodes("ul li")%>% html_text %>% 
+  trajectories <- txt %>% html_nodes("ul li") %>% html_text %>% 
     str_replace_all("\\n|\\t","") %>% 
     str_split(" - ") %>%
     map(function(x) data.frame(origin=as.character(x[1]), destination=as.character(x[2]))) %>% 
     reduce(rbind)
 
+  
   # for each trajecty, add the storing data
-  result <- cbind(trajectories, page_data)
-
+  if(!is.null(trajectories)) {
+    result <- cbind(trajectories, page_data)
+  } else { 
+    result <- page_data
+  }
+  
   return(result)
+
+  
 }
