@@ -28,12 +28,15 @@ source("functions/getAllLinks.R")
 
 #### Load data ####
 
+# Takes about ~ 30 minutes of punishing rijdendetreinen.nl/ 
 pages <- getAllLinks()
-data <- rbindlist(lapply(pages[1:10], read_storing_page), use.names = T, fill = T) # Reads in all the pages.
+system.time(data <- rbindlist(lapply(pages, read_storing_page), use.names = T, fill = T)) # Reads in all the pages.
 
+# Save to a temporary folder 
+write.csv(data, "data/data.csv", row.names=F)
 
 #### Analyse data ####
-data
+
 #..
   
   
