@@ -5,11 +5,12 @@
 read_storing_page <- function(url) { 
 
   txt <- read_html(url)
-  raw <- txt %>% html_nodes("p") %>% html_text
-  
+  raw <- txt %>% html_nodes("p") %>% html_text %>% paste(collapse = "\n\n") # One big flat text vector of every <p>
+
   # Get time information
   page_data <- data.frame(
-    storing = txt %>% html_nodes("h1") %>% html_text
+      storing = txt %>% html_nodes("h1") %>% html_text %>% str_replace("\\([A-Z a-z]+\\)", "") %>% str_replace_all("\\s$","") %>% str_replace_all("\\s$","")
+    , cause = (txt %>% html_nodes("h1") %>% html_text %>% str_match("\\(([a-zA-Z 0-9]+)\\)"))[,2]
     , start_date = (raw[[1]] %>% str_match("voor het eerst aangemaakt op\n\t([0-9]+ [a-z]+) om ([0-9]{2}\\.[0-9]{2}) uur\\."))[,2]
     , start_time = (raw[[1]] %>% str_match("voor het eerst aangemaakt op\n\t([0-9]+ [a-z]+) om ([0-9]{2}\\.[0-9]{2}) uur\\."))[,3]
     , dur_hours = (raw[[1]] %>% str_match("([0-9]+) uur en ([0-9]+) minuten"))[,2]
