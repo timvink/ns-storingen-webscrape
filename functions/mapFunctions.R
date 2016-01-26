@@ -14,6 +14,7 @@ plotLines = function(data2,stations,date_start,date_end){
   # calculate unique trajectories.
   traj <- data2[complete.cases(data2),.(Weight = .N),by=.(destination, dest_x, dest_y, origin, origin_x, origin_y)]
   traj[,ID := .I]
+  traj[, line_colour := rescale_line_weights(Weight, n_groups = 5)]
 
   # create unique plot
   m <- leaflet(sel_station) %>% addTiles() %>%
@@ -25,7 +26,7 @@ plotLines = function(data2,stations,date_start,date_end){
     lat <- c(traj[i,dest_y], traj[i,origin_y])
     lon <- c(traj[i,dest_x], traj[i,origin_x])
     #print(i)
-    m <- m %>% addPolylines(lng=lon,lat=lat, weight = 3, fillOpacity = 0.2,
+    m <- m %>% addPolylines(lng=lon,lat=lat, weight = 3, fillOpacity = 0.2,color = traj$line_colour[i],
                           popup = sprintf("%s to %s", traj$origin[i], traj$destination[i]))
     }
 return(m)
