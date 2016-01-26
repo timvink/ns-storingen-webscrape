@@ -28,6 +28,8 @@ Sys.setenv(no_proxy="*")
 source("functions/read_storing_page.R")
 source("functions/getAllLinks.R")
 source("functions/rescale_line_weights.R")
+source("functions/getLatLon.R")
+source("functions/mapFunctions.R")
 
 # Todo / issues
 # in getAllLinks, make sure to set i dynamicly to number of pages.
@@ -45,5 +47,14 @@ write.csv(data, "data/data.csv", row.names=F)
 
 #### Analyse data ####
 
-#..
-  
+# read in data
+data = fread("data/data.csv")
+stations = fread("data/stations.csv")
+
+# add geo points
+data2  = getLatLon(data,stations)
+
+# plot
+m = plotLines(data2 = data2,stations = stations,date_start = '2013-01-01',date_end = '2016-01-10')
+m
+

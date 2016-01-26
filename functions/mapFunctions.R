@@ -17,7 +17,10 @@ plotLines = function(data2,stations,date_start,date_end){
   traj[, line_colour := rescale_line_weights(Weight, n_groups = 5)]
 
   # create unique plot
-  m <- leaflet(sel_station) %>% addTiles() %>%
+  m <- leaflet(sel_station) %>% addTiles() %>% 
+    addProviderTiles("CartoDB.Positron",
+                     options = providerTileOptions(noWrap = TRUE)
+    ) %>%
     addCircles(lng = ~X, lat = ~Y, weight = 1,
                radius = 2500, popup = sel_station$NAME
   )
@@ -26,8 +29,8 @@ plotLines = function(data2,stations,date_start,date_end){
     lat <- c(traj[i,dest_y], traj[i,origin_y])
     lon <- c(traj[i,dest_x], traj[i,origin_x])
     #print(i)
-    m <- m %>% addPolylines(lng=lon,lat=lat, weight = 3, fillOpacity = 0.2,color = traj$line_colour[i],
-                          popup = sprintf("%s to %s", traj$origin[i], traj$destination[i]))
+    m <- m %>% addPolylines(lng=lon,lat=lat, weight = 5, fillOpacity = 0.9,color = traj$line_colour[i],
+                          popup = sprintf("%s to %s (%s storingen)", traj$origin[i], traj$destination[i], traj$Weight[i]))
     }
 return(m)
 }
