@@ -14,6 +14,8 @@ library(data.table)
 library(purrr)
 library(lubridate)
 library(leaflet)
+library(RColorBrewer)
+library(dplyr)
 
 # Just in case there are proxy problems
 Sys.setenv(http_proxy="")
@@ -24,6 +26,7 @@ Sys.setenv(no_proxy="*")
 # Source our functions
 source("functions/read_storing_page.R")
 source("functions/getAllLinks.R")
+source("functions/rescale_line_weights.R")
 
 # Todo / issues
 # in getAllLinks, make sure to set i dynamicly to number of pages.
