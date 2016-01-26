@@ -16,6 +16,7 @@ library(lubridate)
 library(leaflet)
 library(RColorBrewer)
 library(dplyr)
+library(shiny)
 
 # Just in case there are proxy problems
 Sys.setenv(http_proxy="")
